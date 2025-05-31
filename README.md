@@ -3,14 +3,14 @@ Welcome! This is the official repo of the paper "[RF4D:Neural Radar Fields for N
 
 - Jiarui Zhang, Zhihao Li, Chong Wang, Bihan Wen
   
-![Alt text](assets/teaser.png)
+![Alt text](assets/fig1.png)
 
 ## Framework
-![alt text](assets/framework.png)
+![alt text](assets/fig2.png)
 
 ## Results
-![alt text](assets/result.jpg)
-![alt text](assets/result.png)
+![alt text](assets/appendix_3d.png)
+![alt text](assets/fig4_2.png)
 
 ## :star: Citation
 Please cite our paper if you find our work useful. Thanks! 
