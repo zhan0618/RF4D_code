@@ -6,11 +6,11 @@ Welcome! This is the official repo of the paper "[RF4D:Neural Radar Fields for N
 <img src="assets/fig1.jpg" width="500">
 
 ## Framework
-![alt text](assets/method.png)
+<img src="assets/method.png" width="500">
 
 ## Results
-![alt text](assets/appendix_3d.png)
-![alt text](assets/weather.png)
+<img src="assets/appendix_3d.png" width="500">
+<img src="assets/weather.png" width="500">
 
 ## :star: Citation
 Please cite our paper if you find our work useful. Thanks! 
