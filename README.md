@@ -1,5 +1,5 @@
 # RF4D:Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes
-Welcome! This is the official repo of the paper "[RF4D:Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes](https://arxiv.org/abs/2505.20967)". The code will be released soon.
+Welcome! This is the official repo of the paper "[RF4D:Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes](https://arxiv.org/abs/2505.20967v3)". The code will be released soon.
 
 - Jiarui Zhang, Zhihao Li, Chong Wang, Bihan Wen
 
