@@ -184,6 +184,40 @@ max_range = 3360
 
 You can visualize the generated occupancy maps with the provided `visualize_fft_and_occupancy` helper in the notebook.
 
+## Training Example
+
+After preparing the Boreas metadata and activating the `rf4d` environment, run the sunshine sequence example:
+
+```bash
+cd src
+
+python main.py \
+  --config configs/Radar4D_boreas-2020-12-18-13-44_3412_3512_2d_config.ini \
+  --save_loss_plot \
+  --num_fov_samples 3 \
+  --weight_fft 0.9 \
+  --fft_loss mse \
+  --lr 1e-4 \
+  --device cuda:0 \
+  --workspace ./log/sun \
+  --bs 4 \
+  --iters 15000 \
+  --train_thresholded \
+  --reg_alpha_mean \
+  --weight_alpha_mean 5e-3 \
+  --alpha_consistent \
+  --weight_alpha_consistent 1e-2 \
+  --flow_reg \
+  --weight_flow_reg 1e-4
+```
+
+The run writes logs, checkpoints, and loss plots to the folder specified by `--workspace`.
+
+## Todo List
+
+- [x] Upload the code.
+- [ ] The released code is still under checking.
+
 ## :star: Citation
 
 Please cite our paper if you find our work useful. Thanks! 
