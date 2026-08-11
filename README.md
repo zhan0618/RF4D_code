@@ -38,6 +38,37 @@ pip install \
   ipykernel==6.28.0
 ```
 
+Install the PyTorch binding of [tiny-cuda-nn](https://github.com/NVlabs/tiny-cuda-nn). Make sure `nvcc` is available before installing:
+
+```bash
+nvcc --version
+pip install ninja
+pip install git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch
+```
+
+If the direct pip install fails, compile it from a local clone:
+
+```bash
+git clone --recursive https://github.com/NVlabs/tiny-cuda-nn.git
+cd tiny-cuda-nn/bindings/torch
+python setup.py install
+cd ../../..
+```
+
+If your machine cannot detect the GPU architecture automatically, set `TCNN_CUDA_ARCHITECTURES` before installation. For example:
+
+```bash
+export TCNN_CUDA_ARCHITECTURES=86  # RTX 3090 / A5000
+```
+
+Common values are `70` for V100, `75` for RTX 2080 Ti, `80` for A100, `86` for RTX 3090/A5000, and `89` for RTX 4090. Re-run the tiny-cuda-nn installation command after setting this variable.
+
+Verify the installation:
+
+```bash
+python -c "import torch; import tinycudann as tcnn; print(torch.__version__, torch.version.cuda); print('tiny-cuda-nn OK')"
+```
+
 Register the environment as a Jupyter kernel:
 
 ```bash
