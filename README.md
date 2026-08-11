@@ -41,10 +41,10 @@ pip install \
 Register the environment as a Jupyter kernel:
 
 ```bash
-python -m ipykernel install --user --name radarfields --display-name "Python (radarfields)"
+python -m ipykernel install --user --name rf4d --display-name "Python (rf4d)"
 ```
 
-When running `data_preparation/data.ipynb`, select the `Python (radarfields)` kernel.
+When running `data_preparation/data.ipynb`, select the `Python (rf4d)` kernel.
 
 ## Data Preparation
 
