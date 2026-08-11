@@ -1,13 +1,156 @@
-# RF4D:Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes
-Welcome! This is the official repo of the paper "[RF4D:Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes](https://arxiv.org/abs/2505.20967v3)". The code will be released soon.
+# RF4D: Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes
+
+Welcome! This is the official repo of the paper "[RF4D: Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes](https://arxiv.org/abs/2505.20967v3)".
 
 - Jiarui Zhang, Zhihao Li, Chong Wang, Bihan Wen
 
 ## Framework
+
 <img src="assets/method.jpg">
 
+## Environment Setup
+
+The current release includes the data preparation scripts used to build the RF4D/LiDAR4D metadata from Boreas sequences.
+
+Create a conda environment:
+
+```bash
+conda create -n rf4d python=3.9 -y
+conda activate rf4d
+```
+
+Install the required Python packages:
+
+```bash
+pip install numpy tqdm pillow matplotlib opencv-python jupyter
+```
+
+If you want to generate radar occupancy supervision from `data_preparation/data.ipynb`, also install PyTorch following the command for your CUDA version from the official PyTorch installation page. For example, for a CPU-only setup:
+
+```bash
+pip install torch torchvision torchaudio
+```
+
+## Data Preparation
+
+### 1. Prepare Boreas data
+
+Download the required Boreas sequences and keep the original sequence structure. The scripts expect each sequence to contain the following folders/files:
+
+```text
+<project_folder>/
+  boreas-YYYY-MM-DD-HH-MM/
+    applanix/
+      radar_poses.csv
+      lidar_poses.csv
+      camera_poses.csv
+    radar/
+      <radar_timestamp>.png
+    lidar/
+      <lidar_timestamp>.bin
+    camera/
+      <camera_timestamp>.png
+```
+
+In the examples below, `<project_folder>` is the root folder containing the Boreas sequences.
+
+### 2. Generate sensor pose files
+
+Run:
+
+```bash
+python data_preparation/get_3d_radar_poses.py \
+  --project_folder /path/to/boreas \
+  --sequence boreas-2020-12-18-13-44 \
+  --dimension 3
+```
+
+This reads the Applanix CSV files and writes NumPy pose/timestamp files to:
+
+```text
+<project_folder>/<sequence>/LidarRadarGuide/
+  radar_poses_3.npy
+  radar_times.npy
+  lidar_poses_3.npy
+  lidar_times.npy
+  camera_poses_3.npy
+  camera_times.npy
+```
+
+Use `--dimension 2` if you want to constrain the poses to 2D motion.
+
+### 3. Build frame metadata
+
+Open `data_preparation/data.ipynb` and set the dataset variables in the first code cell:
+
+```python
+project_folder = "/path/to/boreas"
+save_folder = "/path/to/boreas/LidarRadarGuide"
+condition = "snow"  # or "sunshine", "rain", "static"
+sequence = "boreas-2021-01-26-11-22"
+first_frame = 1090
+last_frame = 1182
+dim = 2
+```
+
+Then run the notebook cells for sequence segmentation. The notebook matches each radar frame to the closest LiDAR and camera frame and writes:
+
+```text
+<project_folder>/LidarRadarGuide/
+  <sequence>_<first_frame>_<last_frame>_<dim>d.json
+```
+
+Each frame entry contains radar, LiDAR, and camera file paths, timestamps, and poses.
+
+### 4. Generate LiDAR range views and split JSON files
+
+In the LiDAR4D section of `data_preparation/data.ipynb`, configure the LiDAR panorama parameters:
+
+```python
+H = 128
+W = int(360 / 0.2)
+intrinsics = (15, 40)  # fov_up, fov
+```
+
+Run the LiDAR range-view generation cells to create:
+
+```text
+<project_folder>/<sequence>/lidar_range_view/
+  <lidar_timestamp>.npy
+```
+
+Then run the LiDAR4D JSON generation cells. They create train/val/test split files under `save_folder`:
+
+```text
+Lidar4D_<sequence>_train_<first_frame>_<last_frame>_<dim>d.json
+Lidar4D_<sequence>_val_<first_frame>_<last_frame>_<dim>d.json
+Lidar4D_<sequence>_test_<first_frame>_<last_frame>_<dim>d.json
+```
+
+The notebook also computes the scene scale/offset and writes config files for LiDAR4D and Radar4D. Update the hard-coded config output paths in the notebook if your local workspace is different.
+
+### 5. Generate radar occupancy supervision
+
+The final section of `data_preparation/data.ipynb` computes radar occupancy maps from the radar FFT images. It writes:
+
+```text
+<project_folder>/<sequence>/occ/
+  <radar_timestamp>.npy
+```
+
+The default settings used by the notebook are:
+
+```python
+min_range = 0
+max_range = 3360
+```
+
+You can visualize the generated occupancy maps with the provided `visualize_fft_and_occupancy` helper in the notebook.
+
 ## :star: Citation
+
 Please cite our paper if you find our work useful. Thanks! 
+
 ```
 @inproceedings{zhang2026rf4d,
   title={Rf4d: Neural radar fields for novel view synthesis in outdoor dynamic scenes},
@@ -19,4 +162,5 @@ Please cite our paper if you find our work useful. Thanks!
 ```
 
 ## :email: Contact
+
 If you have any questions, please feel free to contact me via `zhan0618@ntu.edu.sg`.
