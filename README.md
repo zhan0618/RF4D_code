@@ -108,22 +108,21 @@ Run:
 python data_preparation/get_3d_radar_poses.py \
   --project_folder /path/to/boreas \
   --sequence boreas-2020-12-18-13-44 \
-  --dimension 3
+  --dimension 2
 ```
 
 This reads the Applanix CSV files and writes NumPy pose/timestamp files to:
 
 ```text
 <project_folder>/<sequence>/LidarRadarGuide/
-  radar_poses_3.npy
+  radar_poses_2.npy
   radar_times.npy
-  lidar_poses_3.npy
+  lidar_poses_2.npy
   lidar_times.npy
-  camera_poses_3.npy
+  camera_poses_2.npy
   camera_times.npy
 ```
 
-Use `--dimension 2` if you want to constrain the poses to 2D motion.
 
 ### 3. Build frame metadata
 
