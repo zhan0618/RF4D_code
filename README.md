@@ -9,11 +9,12 @@ Welcome! This is the official repo of the paper "[RF4D:Neural Radar Fields for N
 ## :star: Citation
 Please cite our paper if you find our work useful. Thanks! 
 ```
-@article{zhang2025rf4d,
-  title={RF4D: Neural Radar Fields for Novel View Synthesis in Outdoor Dynamic Scenes},
+@inproceedings{zhang2026rf4d,
+  title={Rf4d: Neural radar fields for novel view synthesis in outdoor dynamic scenes},
   author={Zhang, Jiarui and Li, Zhihao and Wang, Chong and Wen, Bihan},
-  journal={arXiv preprint arXiv:2505.20967},
-  year={2025}
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={15387--15397},
+  year={2026}
 }
 ```
 
