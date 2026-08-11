@@ -12,24 +12,39 @@ Welcome! This is the official repo of the paper "[RF4D: Neural Radar Fields for 
 
 The current release includes the data preparation scripts used to build the RF4D/LiDAR4D metadata from Boreas sequences.
 
-Create a conda environment:
+Create the conda environment following our `radarfields` setup:
 
 ```bash
-conda create -n rf4d python=3.9 -y
-conda activate rf4d
+conda create -n radarfields python=3.9.18 -y
+conda activate radarfields
 ```
 
-Install the required Python packages:
+Install PyTorch 2.0.1 with CUDA 11.7:
 
 ```bash
-pip install numpy tqdm pillow matplotlib opencv-python jupyter
+conda install pytorch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2 pytorch-cuda=11.7 -c pytorch -c nvidia -y
 ```
 
-If you want to generate radar occupancy supervision from `data_preparation/data.ipynb`, also install PyTorch following the command for your CUDA version from the official PyTorch installation page. For example, for a CPU-only setup:
+Install the remaining packages used by the data preparation scripts and notebook:
 
 ```bash
-pip install torch torchvision torchaudio
+pip install \
+  numpy==1.24.4 \
+  tqdm==4.65.0 \
+  pillow==9.5.0 \
+  matplotlib==3.5.3 \
+  opencv-python==4.11.0 \
+  jupyter==1.1.1 \
+  ipykernel==6.28.0
 ```
+
+Register the environment as a Jupyter kernel:
+
+```bash
+python -m ipykernel install --user --name radarfields --display-name "Python (radarfields)"
+```
+
+When running `data_preparation/data.ipynb`, select the `Python (radarfields)` kernel.
 
 ## Data Preparation
 
