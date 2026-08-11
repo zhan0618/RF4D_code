@@ -12,11 +12,11 @@ Welcome! This is the official repo of the paper "[RF4D: Neural Radar Fields for 
 
 The current release includes the data preparation scripts used to build the RF4D/LiDAR4D metadata from Boreas sequences.
 
-Create the conda environment following our `radarfields` setup:
+Create the conda environment following our `radarfields` dependency setup:
 
 ```bash
-conda create -n radarfields python=3.9.18 -y
-conda activate radarfields
+conda create -n rf4d python=3.9.18 -y
+conda activate rf4d
 ```
 
 Install PyTorch 2.0.1 with CUDA 11.7:
