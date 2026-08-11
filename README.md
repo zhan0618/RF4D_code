@@ -55,14 +55,6 @@ python setup.py install
 cd ../../..
 ```
 
-If your machine cannot detect the GPU architecture automatically, set `TCNN_CUDA_ARCHITECTURES` before installation. For example:
-
-```bash
-export TCNN_CUDA_ARCHITECTURES=86  # RTX 3090 / A5000
-```
-
-Common values are `70` for V100, `75` for RTX 2080 Ti, `80` for A100, `86` for RTX 3090/A5000, and `89` for RTX 4090. Re-run the tiny-cuda-nn installation command after setting this variable.
-
 Verify the installation:
 
 ```bash
