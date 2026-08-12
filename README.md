@@ -139,24 +139,9 @@ Then run the notebook cells for sequence segmentation. The notebook matches each
 
 Each frame entry contains radar, LiDAR, and camera file paths, timestamps, and poses.
 
-### 4. Generate LiDAR range views and split JSON files
+### 4. Generate split JSON files and configs
 
-In the LiDAR4D section of `data_preparation/data.ipynb`, configure the LiDAR panorama parameters:
-
-```python
-H = 128
-W = int(360 / 0.2)
-intrinsics = (15, 40)  # fov_up, fov
-```
-
-Run the LiDAR range-view generation cells to create:
-
-```text
-<project_folder>/<sequence>/lidar_range_view/
-  <lidar_timestamp>.npy
-```
-
-Then run the LiDAR4D JSON generation cells. They create train/val/test split files under `save_folder`:
+Run the RF4D JSON generation cells in `data_preparation/data.ipynb`. They create train/val/test split files under `save_folder`:
 
 ```text
 Lidar4D_<sequence>_train_<first_frame>_<last_frame>_<dim>d.json
@@ -164,7 +149,7 @@ Lidar4D_<sequence>_val_<first_frame>_<last_frame>_<dim>d.json
 Lidar4D_<sequence>_test_<first_frame>_<last_frame>_<dim>d.json
 ```
 
-The notebook also computes the scene scale/offset and writes config files for LiDAR4D and Radar4D. Update the hard-coded config output paths in the notebook if your local workspace is different.
+The `lidar_file_path` entries point directly to the raw Boreas LiDAR `.bin` files. The notebook computes the scene scale/offset directly from those point clouds and writes config files for LiDAR4D and Radar4D. Update the hard-coded config output paths in the notebook if your local workspace is different.
 
 ### 5. Generate radar occupancy supervision
 
