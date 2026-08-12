@@ -238,26 +238,26 @@ if __name__ == "__main__":
     print(poses.shape)
     print(times.shape)
 
-    if not os.path.exists(os.path.join(project_folder, sequence,'LidarRadarGuide')):
-        os.makedirs(os.path.join(project_folder, sequence,'LidarRadarGuide'))
+    if not os.path.exists(os.path.join(project_folder, sequence,'rf4d')):
+        os.makedirs(os.path.join(project_folder, sequence,'rf4d'))
 
     # save to numpy
-    np.save(os.path.join(project_folder, sequence,'LidarRadarGuide', f'radar_poses_{args.dimension}.npy'), poses)
-    np.save(os.path.join(project_folder, sequence,'LidarRadarGuide', 'radar_times.npy'), times)
+    np.save(os.path.join(project_folder, sequence,'rf4d', f'radar_poses_{args.dimension}.npy'), poses)
+    np.save(os.path.join(project_folder, sequence,'rf4d', 'radar_times.npy'), times)
     #plot_transformation_sequence_gif(poses, gif_filename=os.path.join(project_folder, sequence, 'radar_poses.gif'), delay=0.01)
 
     # Save lidar poses as well
     lidar_pose_path = os.path.join(project_folder, sequence,'applanix','lidar_poses.csv')
     poses, times = read_traj_file_gt(lidar_pose_path, args.dimension)
-    np.save(os.path.join(project_folder, sequence,'LidarRadarGuide', f'lidar_poses_{args.dimension}.npy'), poses)
-    np.save(os.path.join(project_folder, sequence,'LidarRadarGuide', 'lidar_times.npy'), times)
+    np.save(os.path.join(project_folder, sequence,'rf4d', f'lidar_poses_{args.dimension}.npy'), poses)
+    np.save(os.path.join(project_folder, sequence,'rf4d', 'lidar_times.npy'), times)
     #plot_transformation_sequence_gif(poses, gif_filename=os.path.join(project_folder, sequence, 'lidar_poses.gif'), delay=0.01)
 
     # save camera poses as well
     camera_pose_path = os.path.join(project_folder, sequence,'applanix','camera_poses.csv')
     poses, times = read_traj_file_gt(camera_pose_path, args.dimension)
-    np.save(os.path.join(project_folder, sequence,'LidarRadarGuide', f'camera_poses_{args.dimension}.npy'), poses)
-    np.save(os.path.join(project_folder, sequence,'LidarRadarGuide', 'camera_times.npy'), times)
+    np.save(os.path.join(project_folder, sequence,'rf4d', f'camera_poses_{args.dimension}.npy'), poses)
+    np.save(os.path.join(project_folder, sequence,'rf4d', 'camera_times.npy'), times)
 
 
     ## Script:

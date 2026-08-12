@@ -34,7 +34,7 @@ def init_weights(module):
 
 
 def load_frame_origins(args):
-    data_json_name = f"{args.sequence_id}_{int(args.first_frame)}_{int(args.last_frame)}_2d.json"
+    data_json_name = f"RF4D_{args.sequence_id}_{int(args.first_frame)}_{int(args.last_frame)}_2d.json"
     data_path = os.path.join(args.project_root, data_json_name)
     with open(data_path) as f:
         preprocess = json.load(f)

@@ -106,7 +106,7 @@ python data_preparation/get_3d_radar_poses.py \
 This reads the Applanix CSV files and writes NumPy pose/timestamp files to:
 
 ```text
-<project_folder>/<sequence>/LidarRadarGuide/
+<project_folder>/<sequence>/rf4d/
   radar_poses_2.npy
   radar_times.npy
   lidar_poses_2.npy
@@ -122,7 +122,7 @@ Open `data_preparation/data.ipynb` and set the dataset variables in the first co
 
 ```python
 project_folder = "/path/to/boreas"
-save_folder = "/path/to/boreas/LidarRadarGuide"
+save_folder = "/path/to/boreas/rf4d"
 condition = "snow"  # or "sunshine", "rain", "static"
 sequence = "boreas-2021-01-26-11-22"
 first_frame = 1090
@@ -133,8 +133,8 @@ dim = 2
 Then run the notebook cells for sequence segmentation. The notebook matches each radar frame to the closest LiDAR and camera frame and writes:
 
 ```text
-<project_folder>/LidarRadarGuide/
-  <sequence>_<first_frame>_<last_frame>_<dim>d.json
+<project_folder>/rf4d/
+  RF4D_<sequence>_<first_frame>_<last_frame>_<dim>d.json
 ```
 
 Each frame entry contains radar, LiDAR, and camera file paths, timestamps, and poses.
@@ -144,12 +144,12 @@ Each frame entry contains radar, LiDAR, and camera file paths, timestamps, and p
 Run the RF4D JSON generation cells in `data_preparation/data.ipynb`. They create train/val/test split files under `save_folder`:
 
 ```text
-Lidar4D_<sequence>_train_<first_frame>_<last_frame>_<dim>d.json
-Lidar4D_<sequence>_val_<first_frame>_<last_frame>_<dim>d.json
-Lidar4D_<sequence>_test_<first_frame>_<last_frame>_<dim>d.json
+RF4D_<sequence>_train_<first_frame>_<last_frame>_<dim>d.json
+RF4D_<sequence>_val_<first_frame>_<last_frame>_<dim>d.json
+RF4D_<sequence>_test_<first_frame>_<last_frame>_<dim>d.json
 ```
 
-The `lidar_file_path` entries point directly to the raw Boreas LiDAR `.bin` files. The notebook computes the scene scale/offset directly from those point clouds and writes config files for LiDAR4D and Radar4D. Update the hard-coded config output paths in the notebook if your local workspace is different.
+The `lidar_file_path` entries point directly to the raw Boreas LiDAR `.bin` files. The notebook computes the scene scale/offset directly from those point clouds and writes RF4D/Radar4D config files. Update the hard-coded config output paths in the notebook if your local workspace is different.
 
 ### 5. Generate radar occupancy supervision
 
@@ -184,6 +184,7 @@ python main.py \
   --fft_loss mse \
   --lr 1e-4 \
   --device cuda:0 \
+  --project_root /path/to/boreas/rf4d \
   --workspace ./log/sun \
   --bs 4 \
   --iters 15000 \

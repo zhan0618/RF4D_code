@@ -15,7 +15,7 @@ def get_arg_parser():
     parser.add_argument("--save_loss_plot", action="store_true")
     parser.add_argument("--ckpt", type=str, default="latest", choices=["latest", "best", "scratch"])
 
-    parser.add_argument("--project_root", type=str, default="/mnt/new_ssd1/jiarui/boreas/LidarRadarGuide")
+    parser.add_argument("--project_root", type=str, default="/mnt/new_ssd1/jiarui/boreas/rf4d")
     parser.add_argument("--sequence_id", type=str, default="boreas-2020-12-18-13-44")
     parser.add_argument("--first_frame", type=int, default=3412)
     parser.add_argument("--last_frame", type=int, default=3512)

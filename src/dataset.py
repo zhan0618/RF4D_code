@@ -11,6 +11,11 @@ from torch.utils.data import DataLoader
 from sampler import sample_pixels
 
 
+def load_lidar_bin(lidar_path):
+    point_cloud = np.fromfile(lidar_path, dtype=np.float32).reshape(-1, 6)
+    return point_cloud[:, :4]
+
+
 @dataclass
 class RadarDataset:
     args: object
@@ -38,7 +43,7 @@ class RadarDataset:
             raise ValueError("The release src only keeps the training path required by the documented command.")
 
         self.range_bounds = (self.min_range_bin, self.max_range_bin)
-        train_file = f"Lidar4D_{self.sequence_id}_train_{self.first_frame}_{self.last_frame}_2d.json"
+        train_file = f"RF4D_{self.sequence_id}_train_{self.first_frame}_{self.last_frame}_2d.json"
         data_path = os.path.join(self.project_root, train_file)
 
         with open(data_path) as f:
@@ -49,6 +54,7 @@ class RadarDataset:
         self.imgs = []
         self.times = []
         self.frame_ids = []
+        self.lidar_paths = []
 
         num_data = len(preprocess["frames"])
         frame_span = self.last_frame - self.first_frame
@@ -66,6 +72,7 @@ class RadarDataset:
             self.imgs.append(image)
             self.times.append(float(frame_id / frame_span))
             self.frame_ids.append(frame_id)
+            self.lidar_paths.append(frame["lidar_file_path"])
 
         self.poses_radar = torch.from_numpy(np.stack(self.poses_radar, axis=0)).to(
             dtype=torch.float32, device=self.device
@@ -92,6 +99,7 @@ class RadarDataset:
             "coords": sampled_coords,
             "time_steps": self.times[indices].to(self.device),
             "frame_id": [self.frame_ids[i] for i in indices],
+            "lidar_file_path": [self.lidar_paths[i] for i in indices],
         }
 
     def dataloader(self, batch_size, base_seed=42):
